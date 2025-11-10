@@ -1,8 +1,8 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "myApp~",
-  "description": "my app",
-  "appid": "touristappid",
+  "projectname": "mishidian",
+  "description": "mi shi dian",
+  "appid": "wx102d8ec4d1bafaaf",
   "setting": {
     "urlCheck": true,
     "es6": false,
