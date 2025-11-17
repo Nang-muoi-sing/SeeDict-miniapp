@@ -1,13 +1,15 @@
 import { defineConfig, type UserConfigExport } from '@tarojs/cli'
-
 import devConfig from './dev'
 import prodConfig from './prod'
+import postcssPlugins from '../postcss.config'
+import tailwindcss from 'tailwindcss'
+import { UnifiedViteWeappTailwindcssPlugin as uvtw } from 'weapp-tailwindcss/vite'
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
-export default defineConfig<'vite'>(async (merge, { command, mode }) => {
+export default defineConfig<'vite'>(async (merge, {  }) => {
   const baseConfig: UserConfigExport<'vite'> = {
-    projectName: 'myApp~',
-    date: '2025-11-8',
+    projectName: 'testApp',
+    date: '2025-11-13',
     designWidth: 750,
     deviceRatio: {
       640: 2.34 / 2,
@@ -29,7 +31,29 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
       }
     },
     framework: 'vue3',
-    compiler: 'vite',
+    compiler: {
+      type: 'vite',
+      vitePlugins: [
+        {
+          // 通过 vite 插件加载 postcss,
+          name: 'postcss-config-loader-plugin',
+          config(config) {
+            // 加载 tailwindcss
+            if (typeof config.css?.postcss === 'object') {
+              config.css?.postcss.plugins?.unshift(tailwindcss())
+            }
+          },
+        },
+        uvtw({
+          // rem转rpx
+          rem2rpx: true,
+          // 除了小程序这些，其他平台都 disable
+          disabled: process.env.TARO_ENV === 'h5' || process.env.TARO_ENV === 'harmony' || process.env.TARO_ENV === 'rn',
+          // 由于 taro vite 默认会移除所有的 tailwindcss css 变量，所以一定要开启这个配置，进行css 变量的重新注入
+          injectAdditionalCssVarScope: true,
+        })
+      ] as Plugin[]
+    },
     mini: {
       postcss: {
         pxtransform: {
@@ -77,6 +101,17 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
           enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
         }
       }
+    },
+    css: {
+      postcss: {
+        plugins: postcssPlugins,
+      },
+      // https://vitejs.dev/config/shared-options.html#css-preprocessoroptions
+      preprocessorOptions: {
+        scss: {
+          silenceDeprecations: ['legacy-js-api'],
+        },
+      },
     }
   }
 
