@@ -3,11 +3,15 @@ import devConfig from './dev'
 import prodConfig from './prod'
 import postcssPlugins from '../postcss.config'
 import tailwindcss from 'tailwindcss'
+const path = require('path')
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from 'weapp-tailwindcss/vite'
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 export default defineConfig<'vite'>(async (merge, {  }) => {
   const baseConfig: UserConfigExport<'vite'> = {
+    alias: {
+      '@': path.resolve(__dirname, '..', 'src'),
+    },
     projectName: 'testApp',
     date: '2025-11-13',
     designWidth: 750,

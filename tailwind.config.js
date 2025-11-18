@@ -1,8 +1,118 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{html,js,ts,jsx,tsx,vue,styl}'],
+  content: [
+    './src/**/*.{html,js,ts,jsx,tsx,vue,styl}',
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: [
+          "SeeYngping",
+          "Noto Sans",
+          "Noto Sans CJK SC",
+          "SeeFont",
+          "SeeFontEx",
+          "Arial",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol",
+          "Noto Color Emoji",
+        ],
+      },
+      colors: {
+        wheat: {
+          50: "#f7f5f0",
+          100: "#efe6dc",
+          200: "#e6d1ba",
+          300: "#bf9a78",
+          400: "#b0947d",
+          500: "#8e725a",
+          600: "#6d563d",
+          700: "#422e1a",
+          800: "#2e2114",
+          900: "#1b140c",
+          950: "#110c06",
+        },
+        rosybrown: {
+          50: "#f6f3f1",
+          100: "#eee7e4",
+          200: "#dcceca",
+          300: "#cbb7b0",
+          400: "#b9a097",
+          500: "#a8897e",
+          600: "#967367",
+          700: "#855e50",
+          800: "#573f36",
+          900: "#2e221e",
+          950: "#1b1513",
+        },
+      },
+      width: {
+        "3xs": "16rem",
+        "2xs": "18rem",
+        xs: "20rem",
+        sm: "24rem",
+        md: "28rem",
+        lg: "32rem",
+        xl: "36rem",
+        "2xl": "42rem",
+        "3xl": "48rem",
+        "4xl": "56rem",
+        "5xl": "64rem",
+        "6xl": "72rem",
+        "7xl": "80rem",
+      },
+      // 适配小程序的 rpx 单位
+      spacing: {
+        /*'1': '2rpx',
+        '2': '4rpx',
+        '3': '6rpx',
+        '4': '8rpx',
+        '5': '10rpx',
+        '6': '12rpx',
+        '8': '16rpx',
+        '10': '20rpx',
+        '12': '24rpx',
+        '16': '32rpx',
+        '20': '40rpx',
+        '24': '48rpx',
+        '32': '64rpx',
+        '40': '80rpx',
+        '48': '96rpx',
+        '56': '14rem',
+        '64': '128rpx',*/
+      },
+      borderRadius: {
+        'none': '0',
+        'sm': '2rpx',
+        'DEFAULT': '4rpx',
+        'md': '6rpx',
+        'lg': '8rpx',
+        'xl': '12rpx',
+        '2xl': '16rpx',
+        '3xl': '24rpx',
+      }
+    },
+  },
   corePlugins: {
-    preflight: false
-  }
+    preflight: false,
+    // 根据小程序需要启用或禁用其他核心插件
+    float: false,
+    clear: false,
+    backdropOpacity: false,
+    backgroundOpacity: false,
+    borderOpacity: false,
+    divideOpacity: false,
+    ringOpacity: false,
+    textOpacity: false,
+    transform: true,
+    transition: false,
+  },
+  plugins: [
+
+  ],
 }
 
