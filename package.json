@@ -39,9 +39,11 @@
   "author": "",
   "dependencies": {
     "@babel/runtime": "^7.24.4",
+    "@nutui/nutui-taro": "^4.3.14",
     "@tarojs/components": "4.1.8",
     "@tarojs/helper": "4.1.8",
     "@tarojs/plugin-framework-vue3": "4.1.8",
+    "@tarojs/plugin-html": "^4.1.8",
     "@tarojs/plugin-platform-alipay": "4.1.8",
     "@tarojs/plugin-platform-h5": "4.1.8",
     "@tarojs/plugin-platform-harmony-hybrid": "4.1.8",

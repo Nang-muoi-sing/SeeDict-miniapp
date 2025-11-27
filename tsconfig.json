@@ -23,7 +23,8 @@
     "paths": {
       // TS5090 leading './'
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["@tarojs/components/vue3"]
   },
   "include": ["./src", "./types", "./config"],
   "compileOnSave": false

@@ -13,7 +13,7 @@
         <image alt="" src="@/assets/logo-see.svg" />
       </view>
     </view>
-    <SearchBar class="relative w-xs sm:w-sm md:w-md" />
+    <search-bar class="relative w-xs sm:w-sm md:w-md" />
 <!--    <WordsDeck></WordsDeck>-->
     <Footer class="relative"></Footer>
   </view>
@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { onMounted, ref, onBeforeUnmount} from 'vue'
 import Footer from '@/components/Footer/index.vue';
-import SearchBar from '@/components/SeachBar/index.vue';
+import SearchBar from '@/components/SearchBar/index.vue';
 // import NavPanel from '@/components/NavPanel.vue';
 // import SearchBar from '@/components/SearchBar/index.vue';
 // import WordsDeck from '@/components/WordsDeck.vue';
