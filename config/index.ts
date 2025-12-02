@@ -123,7 +123,17 @@ export default defineConfig<'vite'>(async (merge, {  }) => {
         scss: {
           silenceDeprecations: ['legacy-js-api'],
         },
+        stylus: {
+
+        }
       },
+      // 启用 CSS 模块（可选）
+      modules: {
+        generateScopedName: '[name]__[local]___[hash:base64:5]'
+      },
+
+      // 开发环境 sourcemap
+      devSourcemap: true
     }
   }
 
