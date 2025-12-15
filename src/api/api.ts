@@ -1,3 +1,3 @@
-import request from "@/api/request";
+import { api } from "@/api/request";
 
-export const search = (params) => request.get('/api/v1/search/', { params })
+export const search = (params) => api.get(`/api/v1/search/?${params}`, {})
