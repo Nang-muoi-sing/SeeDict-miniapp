@@ -10,7 +10,7 @@
         <image alt="" src="@/assets/logo-see.svg" />
       </view>
     </view>
-    <search-bar class="relative w-xs sm:w-sm md:w-md" @on-search="goSearch" />
+    <search-bar class="relative w-xs sm:w-sm md:w-md" :on-search="goSearch" />
     <Footer />
   </view>
 </template>
@@ -40,9 +40,9 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll);
 });
-const goSearch = (e) => {
+const goSearch = (value) => {
   Taro.navigateTo({
-    url: `/pages/search/index?q=${e.target.value}`,
+    url: `/pages/search/index?q=${value}`,
   })
 }
 </script>

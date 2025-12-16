@@ -5,10 +5,12 @@
     >
       <IconFont width="36"
                 height="36"
-                class="text-rosybrown-400 cursor-pointer pl-1 mr-2" name="search" />
+                class="text-rosybrown-400 cursor-pointer pl-1 mr-2" name="search"
+                @click="onSubmit"
+      />
       <input
         class="text-rosybrown-800 h-full w-full mr-2 ml-1"
-        @blur="onSubmit"
+        @confirm="onSubmit"
       />
     </view>
   </view>
