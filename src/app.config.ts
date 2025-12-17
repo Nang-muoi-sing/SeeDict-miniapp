@@ -2,6 +2,7 @@ export default defineAppConfig({
   pages: [
     'pages/index/index',
     'pages/search/index',
+    'pages/word/index',
   ],
   window: {
     backgroundTextStyle: 'light',
