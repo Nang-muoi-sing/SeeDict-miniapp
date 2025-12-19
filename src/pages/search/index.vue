@@ -1,5 +1,5 @@
 <template>
-  <view class="bg-wheat-50 relative min-h-screen z-10 overflow-hidden home-page pt-1 search-page">
+  <view class="bg-wheat-50 relative min-h-screen z-10 overflow-hidden pt-1 search-page">
     <search-bar class="relative w-[90vw] sm:w-sm md:w-md" :on-search="onSearch" />
     <view class="mx-auto w-[90vw] sm:w-md md:w-2xl lg:w-3xl mt-10 mb-10">
       <view class="bg-wheat-300 mb-2.5 w-fit rounded-lg px-2 py-1 text-xl text-white">
@@ -8,7 +8,7 @@
       <view
         class="block"
         v-for="result in searchedResponse.data.results"
-        @onclick="() => goDetails(result)"
+        @click="() => goDetails(result.w)"
         :key="result.w"
       >
         <view class="bg-wheat-100 my-5 px-5 py-4">
@@ -74,8 +74,8 @@
 </template>
 
 <script setup lang="ts">
-import Taro, {} from "@tarojs/taro";
-import { computed, ref, } from 'vue';
+import Taro, { useLoad } from "@tarojs/taro";
+import { computed, ref, watch } from 'vue';
 import SearchBar from "@/components/SearchBar/index.vue";
 import Footer from "@/components/Footer/index.vue";
 import RubyText from '@/components/RubyText/index.vue';
@@ -85,16 +85,19 @@ import {search} from "@/api/api";
 import {IconFont} from "@nutui/icons-vue-taro";
 import './index.styl'
 
+
 const queries = ref<string[]>([]);
 const allResults = ref<any[]>([]);
 const nextCursor = ref<string | null>(null);
 const hasMore = ref(false);
 
-const state = ref({
-  q: '',
-});
+let q: string = ref<string>('');
 
 
+
+useLoad((option) => {
+  if(option.q) onSearch(option.q);
+})
 
 const searchedResponse = computed(() => ({
   status: 0,
@@ -106,9 +109,10 @@ const searchedResponse = computed(() => ({
   },
 }));
 
+
 const onSearch = async (value: string) => {
   try {
-    state.value.q = value
+    q.value = value
     const params = new URLSearchParams();
     params.append('q', value);
     Taro.showLoading()
@@ -131,7 +135,7 @@ const loadMore = async () => {
 
   try {
     const params = new URLSearchParams();
-    params.append('q', state.value.q);
+    params.append('q', q.value);
     params.append('cursor', nextCursor.value!);
     Taro.showLoading()
     const { status, data } = await search(params);
@@ -146,9 +150,9 @@ const loadMore = async () => {
     Taro.hideLoading()
   }
 };
-const goDetails = (data:any) => {
+const goDetails = (data:string) => {
   Taro.navigateTo({
-    url: `/pages/search/index?w=${data}`,
+    url: `/pages/word/index?w=${data}`,
   })
 }
 const openUrl = (url:string) => {
