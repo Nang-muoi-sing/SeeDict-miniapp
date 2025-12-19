@@ -81,38 +81,38 @@
           各地方音
         </view>
         <view class="mb-5 mt-2 overflow-hidden rounded-lg bg-white text-rosybrown-800">
-          <table
+          <view
             v-if="wordResponse.data.result.seedict.prons.length > 0"
-            class="w-full border-collapse"
+            class="w-full border-collapse table"
           >
-            <thead class="bg-rosybrown-300 text-center">
-            <tr>
-              <th class="py-1 text-white">读音</th>
-              <th class="py-1 text-white">连读</th>
-              <th class="py-1 text-white">地区</th>
-              <!-- <th class="hidden py-1 text-white md:block">来源</th> -->
-            </tr>
-            </thead>
-            <tbody class="text-center">
-            <tr v-for="(pron, index) in wordResponse.data.result.seedict.prons" :key="index">
-              <td class="py-1.5">{{ yngpingToIPA(pron.pron) }}</td>
-              <td class="flex items-center justify-center py-2 md:hidden">
-                <Badge v-if="pron.isSandhi">连</Badge>
-                <Badge v-else>本</Badge>
-              </td>
-              <td class="hidden items-center justify-center py-2 md:flex">
-                <Badge v-if="pron.isSandhi">连读音</Badge>
-                <Badge v-else>本字音</Badge>
-              </td>
-              <td class="py-1.5">
-                {{ pron.location == '' ? '市区' : pron.location }}
-              </td>
-              <!-- <td class="hidden py-1.5 md:block">
-                {{ sourceQuoteMap[pron.source] }}
-              </td> -->
-            </tr>
-            </tbody>
-          </table>
+            <view class="table-header-group  bg-rosybrown-300 text-center">
+              <view class="table-row">
+                <view class="py-1 text-white table-cell">读音</view>
+                <view class="py-1 text-white table-cell">连读</view>
+                <view class="py-1 text-white table-cell">地区</view>
+                <!-- <th class="hidden py-1 text-white md:block">来源</th> -->
+              </view>
+            </view>
+            <view class="table-row-group">
+              <view class="table-row" v-for="(pron, index) in wordResponse.data.result.seedict.prons" :key="index">
+                <view class="py-1.5 table-cell">{{ yngpingToIPA(pron.pron) }}</view>
+                <view class="table-cell py-2 md:hidden text-center">
+                  <Badge v-if="pron.isSandhi">连</Badge>
+                  <Badge v-else>本</Badge>
+                </view>
+                <view class="hidden items-center justify-center py-2 md:flex">
+                  <Badge v-if="pron.isSandhi">连读音</Badge>
+                  <Badge v-else>本字音</Badge>
+                </view>
+                <view class="py-1.5 table-cell">
+                  {{ pron.location == '' ? '市区' : pron.location }}
+                </view>
+                <!-- <td class="hidden py-1.5 md:block">
+                  {{ sourceQuoteMap[pron.source] }}
+                </td> -->
+              </view>
+            </view>
+          </view>
           <view
             v-if="
               wordResponse.data.result.seedict.prons.length > 0 &&
