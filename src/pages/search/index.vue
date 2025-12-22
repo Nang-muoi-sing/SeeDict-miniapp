@@ -22,10 +22,7 @@
               v-for="(book, index) in result.refs"
               :key="index"
             >
-              <IconFont
-                width="10" height="10"
-                class="text-rosybrown-400" name="image"
-              />
+              <image class="icon-img" src="@/assets/icon/book.svg" />
               <text>{{ sourceMap[book] ?? '' }}</text>
             </view>
           </view>

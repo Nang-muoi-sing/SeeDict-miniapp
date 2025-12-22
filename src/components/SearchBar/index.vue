@@ -3,10 +3,11 @@
     <view
       class="search-input-warp relative mx-auto mb-2 z-40 flex h-12 flex-row items-center bg-white px-3 "
     >
-      <IconFont width="36"
-                height="36"
-                class="text-rosybrown-400 cursor-pointer pl-1 mr-2" name="search"
-                @click="onSubmit"
+      <image
+        class="search-icon"
+        src="@/assets/icon/search.svg"
+        alt=""
+        @click="onSubmit"
       />
       <input
         class="text-rosybrown-800 h-full w-full mr-2 ml-1"
@@ -25,7 +26,9 @@ const props = defineProps({
 })
 
 const onSubmit = (e) => {
-  props?.onSearch?.(e.target.value)
+  if(e.target.value) {
+    props?.onSearch?.(e.target.value)
+  }
 }
 
 </script>
