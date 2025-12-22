@@ -21,7 +21,6 @@
         <view class="border-rosybrown-800 text-rosybrown-800 w-fit border-t-[6px] p-1 text-xl font-bold">
           本站释义
         </view>
-        "注音一览"
         <div class="mb-5 mt-2 rounded-lg bg-white px-8 py-6 text-rosybrown-800">
           <Explanations
             :data="wordResponse.data.result.seedict.expls"
@@ -88,14 +87,14 @@
             <view class="table-header-group  bg-rosybrown-300 text-center">
               <view class="table-row">
                 <view class="py-1 text-white table-cell">读音</view>
-                <view class="py-1 text-white table-cell">连读</view>
-                <view class="py-1 text-white table-cell">地区</view>
+                <view class="py-1 text-white table-cell text-center">连读</view>
+                <view class="py-1 text-white table-cell text-center">地区</view>
                 <!-- <th class="hidden py-1 text-white md:block">来源</th> -->
               </view>
             </view>
             <view class="table-row-group">
               <view class="table-row" v-for="(pron, index) in wordResponse.data.result.seedict.prons" :key="index">
-                <view class="py-1.5 table-cell">{{ yngpingToIPA(pron.pron) }}</view>
+                <view class="py-1.5 table-cel  text-center">{{ yngpingToIPA(pron.pron) }}</view>
                 <view class="table-cell py-2 md:hidden text-center">
                   <Badge v-if="pron.isSandhi">连</Badge>
                   <Badge v-else>本</Badge>
@@ -104,7 +103,7 @@
                   <Badge v-if="pron.isSandhi">连读音</Badge>
                   <Badge v-else>本字音</Badge>
                 </view>
-                <view class="py-1.5 table-cell">
+                <view class="py-1.5 table-cell text-center">
                   {{ pron.location == '' ? '市区' : pron.location }}
                 </view>
                 <!-- <td class="hidden py-1.5 md:block">
