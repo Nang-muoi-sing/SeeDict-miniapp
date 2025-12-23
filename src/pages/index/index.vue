@@ -11,6 +11,7 @@
       </view>
     </view>
     <search-bar class="relative w-xs sm:w-sm md:w-md" :on-search="goSearch" />
+    <WordsDeck />
     <Footer />
   </view>
 </template>
@@ -19,6 +20,7 @@
 import { onMounted, ref, onBeforeUnmount} from 'vue'
 import Footer from '@/components/Footer/index.vue';
 import SearchBar from '@/components/SearchBar/index.vue';
+import WordsDeck from '@/components/WordsDeck/index.vue'
 import './index.styl'
 import Taro from "@tarojs/taro";
 
