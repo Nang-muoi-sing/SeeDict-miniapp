@@ -1,8 +1,8 @@
 <template>
   <view class="search-bar">
-    <view :class="['fixed top-0 left-0 z-20 h-screen w-screen backdrop-blur-xs backdrop-brightness-90', { 'hidden': !isHistoryVisible }]" />
+    <view :class="['fixed top-0 left-0 z-20 h-screen w-screen backdrop-blur-xs backdrop-brightness-90', { 'hidden': !( isHistoryVisible && filteredHistory.length > 0) }]" />
     <view :class="['search-input-warp relative mx-auto mb-2 z-40 flex h-12 flex-row items-center bg-white px-3',
-                  { 'focus-search': isHistoryVisible }]">
+                  { 'focus-search': isHistoryVisible && filteredHistory.length > 0 }]">
       <image
         class="search-icon"
         src="@/assets/icon/search.svg"
