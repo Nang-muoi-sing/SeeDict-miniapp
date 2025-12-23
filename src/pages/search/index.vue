@@ -72,14 +72,13 @@
 
 <script setup lang="ts">
 import Taro, { useLoad } from "@tarojs/taro";
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import SearchBar from "@/components/SearchBar/index.vue";
 import Footer from "@/components/Footer/index.vue";
 import RubyText from '@/components/RubyText/index.vue';
 import { sourceMap } from '@/utils/mapping';
 import { correctStops, parseText } from '@/utils/typography';
 import {search} from "@/api/api";
-import {IconFont} from "@nutui/icons-vue-taro";
 import './index.styl'
 
 

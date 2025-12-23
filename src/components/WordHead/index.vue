@@ -9,10 +9,9 @@
         <RubyText :text="props.text" :yngping="props.yngping" />
         <view
           v-if="props.voiceUrl"
-          @click.stop="handleAudioClick"
+          @click.stop.prevent="handleAudioClick"
           @mousedown.stop="isAudioClicking = true"
           @mouseup.stop="isAudioClicking = false"
-          @mouseleave.stop="isAudioClicking = false"
           class="relative z-10"
         >
           <IconFont
@@ -32,8 +31,8 @@
 </template>
 
 <script setup lang="ts">
-import Taro, { useReady } from "@tarojs/taro";
-import { ref } from 'vue';
+import Taro, {} from "@tarojs/taro";
+import { ref, watch } from 'vue';
 import RubyText from '@/components/RubyText/index.vue';
 import {IconFont} from "@nutui/icons-vue-taro";
 import './index.styl'
@@ -45,9 +44,13 @@ const props = defineProps<{
 }>();
 const innerAudioContext = Taro.createInnerAudioContext()
 
-useReady(() => {
-  innerAudioContext.src = props.voiceUrl
-})
+watch(
+  () => props.voiceUrl,
+  (newVal, oldVal) => {
+    console.log(newVal)
+    if((oldVal !== newVal) && newVal) innerAudioContext.src = newVal
+  }
+)
 
 
 const copyTip = ref<HTMLElement | null>(null);
@@ -56,9 +59,14 @@ const isAudioClicking = ref(false);
 
 const handleCopyClick = async () => {
   try {
-    const textToCopy = props.text.replace(/\*/g, '');
-    await navigator.clipboard.writeText(textToCopy);
-
+    await Taro.setClipboardData({
+      data: props.text.replace(/\*/g, '')
+    });
+    Taro.showToast({
+      title: '已复制词条',
+      icon: 'success',
+      duration: 2000,
+    })
   } catch (err) {
     console.error('复制失败:', err);
   }
@@ -66,7 +74,6 @@ const handleCopyClick = async () => {
 
 const handleAudioClick = () => {
   if (!innerAudioContext) return;
-
   if (isPlaying.value) {
     innerAudioContext.pause();
   } else {
