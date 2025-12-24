@@ -83,6 +83,7 @@ const handleAudioClick = () => {
 
   innerAudioContext.onEnded = () => {
     isPlaying.value = false;
+    innerAudioContext.seek(0)
   };
 };
 </script>

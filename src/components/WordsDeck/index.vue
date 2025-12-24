@@ -116,7 +116,6 @@ const onDragEnd = (index: number): void => {
     }
   } else {
     // 未触发移除，回弹到初始位置
-    springs[index].x = 0
     springs[index].scale = 1;
   }
   currentDraggingIndex.value = null;
