@@ -44,10 +44,14 @@ const props = defineProps<{
 }>();
 const innerAudioContext = Taro.createInnerAudioContext()
 
+innerAudioContext.onEnded(() => {
+  isPlaying.value = false;
+  innerAudioContext.seek(0)
+})
+
 watch(
   () => props.voiceUrl,
   (newVal, oldVal) => {
-    console.log(newVal)
     if((oldVal !== newVal) && newVal) innerAudioContext.src = newVal
   }
 )
@@ -74,6 +78,7 @@ const handleCopyClick = async () => {
 
 const handleAudioClick = () => {
   if (!innerAudioContext) return;
+  debugger
   if (isPlaying.value) {
     innerAudioContext.pause();
   } else {
@@ -81,9 +86,6 @@ const handleAudioClick = () => {
   }
   isPlaying.value = !isPlaying.value;
 
-  innerAudioContext.onEnded = () => {
-    isPlaying.value = false;
-    innerAudioContext.seek(0)
-  };
+
 };
 </script>
