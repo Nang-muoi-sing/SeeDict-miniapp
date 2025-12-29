@@ -24,11 +24,11 @@
             >
               <RubyText :text="card.text" :yngping="card.pron"></RubyText>
             </view>
-            <p
+            <view
               class="line-clamp-4 max-w-lg overflow-hidden text-ellipsis whitespace-normal text-base text-rosybrown-800 lg:line-clamp-2 lg:text-lg"
             >
               释义：{{ card.expl }}
-            </p>
+            </view>
           </view>
         </view>
       </view>

@@ -21,10 +21,8 @@
         <view class="border-rosybrown-800 text-rosybrown-800 w-fit border-t-[6px] p-1 text-xl font-bold">
           本站释义
         </view>
-        <div class="mb-5 mt-2 rounded-lg bg-white px-8 py-6 text-rosybrown-800">
-          <Explanations
-            :data="wordResponse.data.result.seedict.expls"
-          ></Explanations>
+        <view class="mb-5 mt-2 rounded-lg bg-white px-8 py-6 text-rosybrown-800">
+          <Explanations :data="wordResponse.data.result.seedict.expls" />
           <view v-if="wordResponse.data.result.seedict.commentExpl">
             <text class="text-rosybrown-700 see-symbol">注釋</text>
             {{ correctText(wordResponse.data.result.seedict.commentExpl) }}
@@ -35,19 +33,19 @@
               wordResponse.data.result.seedict.antonym
             "
           >
-            <hr class="my-2 border-t-2 border-rosybrown-100" />
-            <div class="space-y-1">
-              <p v-if="wordResponse.data.result.seedict.synonym">
-                <text class="text-rosybrown-700" see-symbol>近義詞</text>
+            <view class="my-2 border-t-2 border-rosybrown-100" />
+            <view class="space-y-1">
+              <view v-if="wordResponse.data.result.seedict.synonym">
+                <text class="text-rosybrown-700 see-symbol">近義詞</text>
                 {{ wordResponse.data.result.seedict.synonym }}
-              </p>
-              <p v-if="wordResponse.data.result.seedict.antonym">
+              </view>
+              <view v-if="wordResponse.data.result.seedict.antonym">
                 <text class="text-rosybrown-700 see-symbol">反義詞</text>
                 {{ wordResponse.data.result.seedict.antonym }}
-              </p>
-            </div>
+              </view>
+            </view>
           </view>
-        </div>
+        </view>
       </view>
       <view
         v-if="
@@ -128,8 +126,8 @@
             v-if="wordResponse.data.result.seedict.commentPron"
           >
             <view>
-              <text class="text-rosybrown-700 see-symbol">注釋 </text>{
-              { correctText(wordResponse.data.result.seedict.commentPron) }}
+              <text class="text-rosybrown-700 see-symbol">注釋</text>
+              {{ correctText(wordResponse.data.result.seedict.commentPron) }}
             </view>
           </view>
         </view>
@@ -146,6 +144,90 @@
         <WordPhoneticCard
           :data="wordResponse.data.result.seedict.phonetics"
         ></WordPhoneticCard>
+      </view>
+
+      <view
+        v-if="
+          wordResponse.data.result.seedict.glyphs.length > 0 ||
+          wordResponse.data.result.seedict.commentGlyph
+        "
+      >
+        <view class="border-rosybrown-800 text-rosybrown-800 w-fit border-t-[6px] p-1 text-xl font-bold">
+          用字一览
+        </view>
+        <view
+          class="mb-5 mt-2 overflow-hidden rounded-lg bg-white text-rosybrown-800"
+        >
+          <table
+            v-if="wordResponse.data.result.seedict.glyphs.length > 0"
+            class="w-full border-collapse"
+          >
+            <thead class="bg-rosybrown-300 text-center">
+            <tr>
+              <th class="py-1 text-white">用字</th>
+              <th class="py-1 text-white">类别</th>
+              <!-- <th class="py-1 text-white">来源</th> -->
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr
+              v-for="(glyph, index) in wordResponse.data.result.seedict
+                  .glyphs"
+              :key="index"
+            >
+              <td class="py-1.5">{{ glyph.glyph }}</td>
+              <td class="flex items-center justify-center py-2">
+                <Badge v-if="glyph.category">{{ glyph.category }}</Badge>
+                <Badge v-else>N/A</Badge>
+              </td>
+              <!-- <td class="py-1.5">{{ glyph.source }}</td> -->
+            </tr>
+            </tbody>
+          </table>
+          <view
+            v-if="wordResponse.data.result.seedict.prons.length > 0"
+            class="w-full border-collapse table"
+          >
+            <view class="table-header-group  bg-rosybrown-300 text-center">
+              <view class="table-row">
+                <view class="py-1 text-white table-cell">用字</view>
+                <view class="py-1 text-white table-cell text-center">类别</view>
+                <!-- <th class="hidden py-1 text-white md:block">来源</th> -->
+              </view>
+            </view>
+            <view class="table-row-group">
+              <view class="table-row" v-for="(glyph, index) in wordResponse.data.result.seedict.glyphs" :key="index">
+                <view class="py-1.5 table-cel text-center">{{ glyph.glyph }}</view>
+                <view class="flex items-center justify-center py-2">
+                  <Badge v-if="glyph.category">{{ glyph.category }}</Badge>
+                  <Badge v-else>N/A</Badge>
+                </view>
+                <!-- <td class="py-1.5">{{ glyph.source }}</td> -->
+              </view>
+            </view>
+          </view>
+          <view
+            v-if="
+              wordResponse.data.result.seedict.glyphs.length > 0 &&
+              wordResponse.data.result.seedict.commentGlyph
+            "
+            class="border-t-2 border-rosybrown-100"
+          />
+
+          <view
+            class="px-8"
+            :class="{
+              'pb-4 pt-2': wordResponse.data.result.seedict.glyphs.length > 0,
+              'py-6': wordResponse.data.result.seedict.glyphs.length <= 0,
+            }"
+            v-if="wordResponse.data.result.seedict.commentGlyph"
+          >
+            <view>
+              <text class="text-rosybrown-700 see-symbol">注釋</text>
+              {{ correctText(wordResponse.data.result.seedict.commentGlyph) }}
+            </view>
+          </view>
+        </view>
       </view>
     </view>
     <Footer />
