@@ -78,7 +78,6 @@ const handleCopyClick = async () => {
 
 const handleAudioClick = () => {
   if (!innerAudioContext) return;
-  debugger
   if (isPlaying.value) {
     innerAudioContext.pause();
   } else {
