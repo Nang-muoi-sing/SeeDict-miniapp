@@ -9,11 +9,11 @@
       <view v-if="props.data.cikFinal">
         <text class="text-rosybrown-700 see-symbol">戚書</text>
         {{ props.data.cikInitial }}
-        <text class="text-wheat-400 mr-1 text-sm see-symbol">聲</text>
+        <text class="text-wheat-400 mr-1 text-sm">聲</text>
         {{ props.data.cikFinal }}
-        <text class="text-wheat-400 mr-1 text-sm see-symbol">韻</text>
+        <text class="text-wheat-400 mr-1 text-sm">韻</text>
         {{ props.data.tone }}
-        <text class="text-wheat-400 mr-3 text-sm see-symbol">調</text>
+        <text class="text-wheat-400 mr-3 text-sm">調</text>
         <text
           v-if="props.data.cikAnnotation"
           class="text-wheat-400 inline-block w-full md:inline md:w-fit"
@@ -40,7 +40,7 @@
           v-if="props.data.lingAnnotation"
           class="text-wheat-400 inline-block w-full md:inline md:w-fit"
         >
-          <text class="text-rosybrown-700 ">注釋</text>
+          <text class="text-rosybrown-700 see-symbol">注釋</text>
           {{ props.data.lingAnnotation }}
           <Badge class="ml-1 inline-block" v-if="props.data.liAnnotateLing">
             {{ props.data.lingFinal }} {{ props.data.liAnnotateLingOrder }}
