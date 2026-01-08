@@ -26,10 +26,10 @@
               <text>{{ sourceMap[book] ?? '' }}</text>
             </view>
           </view>
-          <view class="text-rosybrown-800 xxl:text-4xl text-3xl font-bold break-all whitespace-normal">
+          <view class="text-rosybrown-800 xxl:text-4xl text-3xl font-bold break-all whitespace-normal mb-2">
             <RubyText :text="result.text" :yngping="result.pron" />
           </view>
-          <text class="text-wheat-600 mt-2">
+          <text class="text-wheat-600">
             {{ correctStops(parseText(result.brief)) }}
           </text>
         </view>
