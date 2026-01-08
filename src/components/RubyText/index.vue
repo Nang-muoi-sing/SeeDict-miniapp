@@ -1,22 +1,24 @@
 <template>
   <view class="ruby-text">
     <view class="ruby-content" v-if="!props.text || !props.yngping || !isMatchedTextSyllable">
-      <text class="relative top-[0.5em] text-rosybrown-700">
-        {{makeYngpingsCursive(props.yngping) ?? '' }}
-      </text>
-      <view v-if="props.text">
-        <text
-          v-for="(char, index) in baldChars"
-          :key="`${char}-${index}`"
-          class="rb relative inline-block"
-          :class="{
+      <view class="ruby-text-content">
+        <text class="relative top-[0.5em] text-rosybrown-700 rt">
+          {{makeYngpingsCursive(props.yngping) ?? '' }}
+        </text>
+        <view v-if="props.text">
+          <text
+            v-for="(char, index) in baldChars"
+            :key="`${char}-${index}`"
+            class="rb relative inline-block"
+            :class="{
           'w-fit after:absolute after:-bottom-[0.2em] after:left-1/2 after:h-[0.15em] after:w-[0.15em] after:-translate-x-1/2 after:rounded-full after:bg-rosybrown-700 after:content-[\'\']':
             markedChars[index],
         }"
-        >{{ char }}
-        </text>
+          >{{ char }}
+          </text>
+        </view>
+        <text v-else class="rb"></text>
       </view>
-      <text v-else class="rb"></text>
     </view>
     <view class="ruby-content" v-else>
       <view class="ruby-text-content" v-for="(char, index) in baldChars" :key="`${char}-${index}`">
