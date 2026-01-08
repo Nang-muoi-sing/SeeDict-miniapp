@@ -27,7 +27,7 @@
           {{makeYngpingCursive(syllables[index]) }}
         </view>
         <view
-          class="inline-block"
+          class="rb relative inline-block"
           :class="{'w-fit after:absolute after:-bottom-[0.2em] after:left-1/2 after:h-[0.15em] after:w-[0.15em] after:-translate-x-1/2 after:rounded-full after:bg-rosybrown-700 after:content-[\'\']':
           markedChars[index],}"
         >

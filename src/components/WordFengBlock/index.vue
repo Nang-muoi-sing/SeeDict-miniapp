@@ -2,7 +2,7 @@
   <view class="text-rosybrown-800 mt-2 mb-5 rounded-lg bg-white px-8 py-6">
     <view class="items-baseline">
       <text class="text-rosybrown-800 mr-2 text-3xl font-bold sm:text-4xl">
-        {{ props.data.text }}
+        <MarkedText :text="props.data.text" />
       </text>
       <text class="text-rosybrown-500 text-xl">
         /{{ yngpingToIPA(props.data.pronLiteral, true) }}/→/{{
@@ -50,6 +50,8 @@ import { yngpingToIPA } from '@/utils/phonetics';
 import type { WordFeng } from '@/utils/typing';
 import { parseText, correctText } from '@/utils/typography';
 import Explanations from '@/components/Explanations/index.vue'
+import MarkedText from '@/components/MarkedText/index.vue'
+
 
 
 const props = defineProps<{
