@@ -27,6 +27,7 @@ yarn dev:weapp
 
 ****
 ###　主要src目录
+-----------
 * [api](#api)
   * 接口请求地址以及公用request方法
 * [assets](#其他)
