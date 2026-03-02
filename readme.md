@@ -2,6 +2,7 @@
 ===========================
 
 福州方言在线词典。
+node 20以上
 项目以taro4+vue3+vite为主要框架，UI与web端保持一致以tailwindcss3为主。
 预处理器用stylus、状态管理器用pinia
 

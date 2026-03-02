@@ -92,7 +92,7 @@
             </view>
             <view class="table-row-group">
               <view class="table-row" v-for="(pron, index) in wordResponse.data.result.seedict.prons" :key="index">
-                <view class="py-1.5 table-cel  text-center">{{ yngpingToIPA(pron.pron) }}</view>
+                <view class="py-1.5 table-cell text-center">{{ yngpingToIPA(pron.pron) }}</view>
                 <view class="table-cell py-2 md:hidden text-center">
                   <Badge v-if="pron.isSandhi">连</Badge>
                   <Badge v-else>本</Badge>
@@ -158,32 +158,33 @@
         <view
           class="mb-5 mt-2 overflow-hidden rounded-lg bg-white text-rosybrown-800"
         >
-          <table
+          <view
             v-if="wordResponse.data.result.seedict.glyphs.length > 0"
-            class="w-full border-collapse"
+            class="w-full border-collapse table"
           >
-            <thead class="bg-rosybrown-300 text-center">
-            <tr>
-              <th class="py-1 text-white">用字</th>
-              <th class="py-1 text-white">类别</th>
-              <!-- <th class="py-1 text-white">来源</th> -->
-            </tr>
-            </thead>
-            <tbody class="text-center">
-            <tr
-              v-for="(glyph, index) in wordResponse.data.result.seedict
-                  .glyphs"
-              :key="index"
-            >
-              <td class="py-1.5">{{ glyph.glyph }}</td>
-              <td class="flex items-center justify-center py-2">
-                <Badge v-if="glyph.category">{{ glyph.category }}</Badge>
-                <Badge v-else>N/A</Badge>
-              </td>
-              <!-- <td class="py-1.5">{{ glyph.source }}</td> -->
-            </tr>
-            </tbody>
-          </table>
+            <view class="table-header-group bg-rosybrown-300 text-center">
+              <view class="table-row">
+                <view class="py-1 text-white table-cell">用字</view>
+                <view class="py-1 text-white table-cell text-center">类别</view>
+                <!-- <th class="py-1 text-white">来源</th> -->
+              </view>
+            </view>
+            <view class="text-center table-row-group">
+              <view
+                v-for="(glyph, index) in wordResponse.data.result.seedict
+                    .glyphs"
+                :key="index"
+                class="table-row"
+              >
+                <view class="py-1.5 table-cell">{{ glyph.glyph }}</view>
+                <view class="items-center justify-center py-2 table-cell">
+                  <Badge v-if="glyph.category">{{ glyph.category }}</Badge>
+                  <Badge v-else>N/A</Badge>
+                </view>
+                <!-- <td class="py-1.5">{{ glyph.source }}</td> -->
+              </view>
+            </view>
+          </view>
           <view
             v-if="wordResponse.data.result.seedict.prons.length > 0"
             class="w-full border-collapse table"
@@ -197,7 +198,7 @@
             </view>
             <view class="table-row-group">
               <view class="table-row" v-for="(glyph, index) in wordResponse.data.result.seedict.glyphs" :key="index">
-                <view class="py-1.5 table-cel text-center">{{ glyph.glyph }}</view>
+                <view class="py-1.5 table-cell text-center">{{ glyph.glyph }}</view>
                 <view class="flex items-center justify-center py-2">
                   <Badge v-if="glyph.category">{{ glyph.category }}</Badge>
                   <Badge v-else>N/A</Badge>
