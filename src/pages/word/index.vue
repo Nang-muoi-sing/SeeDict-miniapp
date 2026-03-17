@@ -185,7 +185,7 @@
               </view>
             </view>
           </view>
-          <view
+<!--          <view
             v-if="wordResponse.data.result.seedict.prons.length > 0"
             class="w-full border-collapse table"
           >
@@ -193,7 +193,7 @@
               <view class="table-row">
                 <view class="py-1 text-white table-cell">用字</view>
                 <view class="py-1 text-white table-cell text-center">类别</view>
-                <!-- <th class="hidden py-1 text-white md:block">来源</th> -->
+                &lt;!&ndash; <th class="hidden py-1 text-white md:block">来源</th> &ndash;&gt;
               </view>
             </view>
             <view class="table-row-group">
@@ -203,10 +203,10 @@
                   <Badge v-if="glyph.category">{{ glyph.category }}</Badge>
                   <Badge v-else>N/A</Badge>
                 </view>
-                <!-- <td class="py-1.5">{{ glyph.source }}</td> -->
+                &lt;!&ndash; <td class="py-1.5">{{ glyph.source }}</td> &ndash;&gt;
               </view>
             </view>
-          </view>
+          </view>-->
           <view
             v-if="
               wordResponse.data.result.seedict.glyphs.length > 0 &&
