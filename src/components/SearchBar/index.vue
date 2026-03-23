@@ -1,6 +1,5 @@
 <template>
   <view class="search-bar">
-    <view :class="['fixed top-0 left-0 z-20 h-screen w-screen backdrop-blur-xs backdrop-brightness-90', { 'hidden': !( isHistoryVisible && filteredHistory.length > 0) }]" />
     <view :class="['search-input-warp relative mx-auto mb-2 z-40 flex h-12 flex-row items-center bg-white px-3',
                   { 'focus-search': isHistoryVisible && filteredHistory.length > 0 }]">
       <image
@@ -63,13 +62,22 @@
         </view>
       </view>
     </view>
+    <view v-if="showBtn">
+      <Horizontal color="red" @click="openPopup" />
+      111
+      <nut-popup v-model:visible="showPopup" position="right" :style="{ width: '20%', height: '100%' }"></nut-popup>
+    </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { getItem, setItem, removeItem } from '@/utils/utils'
+import { Horizontal } from '@nutui/icons-vue-taro'
+import { useRouter, eventCenter } from '@tarojs/taro'
 import './index.styl'
+
+const router = useRouter()
 
 const HISTORY_KEY = 'searchHistory'
 const props = defineProps({
@@ -80,6 +88,8 @@ const searchValue = ref('');
 const isHistoryVisible = ref(false);
 const filteredHistory = ref<string[]>([]);
 const selectedIndex = ref(-1);
+const showPopup = ref(false);
+
 
 const showHistory = () => {
   filteredHistory.value = getItem(HISTORY_KEY)
@@ -130,4 +140,12 @@ const selectHistory = (index: number) => {
   onSubmit({ target: { value: filteredHistory.value[index] } });
 };
 
+const openPopup = () => {
+  showPopup.value = true
+  eventCenter.trigger('openPopup')
+}
+
+const showBtn = computed(() => {
+  return router.path.indexOf('index/index') === -1
+})
 </script>
