@@ -17,12 +17,14 @@
 </template>
 
 <script setup lang="ts">
+import Taro, {useShareAppMessage, useShareTimeline} from "@tarojs/taro";
 import { onMounted, ref, onBeforeUnmount} from 'vue'
 import Footer from '@/components/Footer/index.vue';
 import SearchBar from '@/components/SearchBar/index.vue';
 import WordsDeck from '@/components/WordsDeck/index.vue'
 import './index.styl'
-import Taro from "@tarojs/taro";
+
+
 
 const scrollY = ref(0);
 const searchBarFixed = ref(false);
@@ -47,4 +49,29 @@ const goSearch = (value) => {
     url: `/pages/search/index?q=${value}`,
   })
 }
+
+useShareAppMessage((res) => {
+
+  // res.from 可区分分享来源：'button' 或 'menu'
+  if (res.from === 'button') {
+    console.log('来自页面内分享按钮', res.target)
+  }
+
+  return {
+    title: '米时典 SeeDict | 福州话词典',
+    path: `/pages/index/index`,
+    imageUrl: 'https://seedict.com/assets/logo-fFBFh86H.svg',
+  }
+})
+useShareTimeline((res) => {
+  // res.from 可区分分享来源：'button' 或 'menu'
+  if (res.from === 'button') {
+    console.log('来自页面内分享按钮', res.target)
+  }
+
+  return {
+    title: '米时典 SeeDict | 福州话词典',
+    imageUrl: 'https://seedict.com/assets/logo-fFBFh86H.svg'
+  }
+})
 </script>
