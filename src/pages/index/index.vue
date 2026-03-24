@@ -60,7 +60,7 @@ useShareAppMessage((res) => {
   return {
     title: '米时典 SeeDict | 福州话词典',
     path: `/pages/index/index`,
-    imageUrl: 'https://seedict.com/assets/logo-fFBFh86H.svg',
+    imageUrl: 'https://oss.seedict.com/images/miniapp-cover.webp',
   }
 })
 useShareTimeline((res) => {
@@ -71,7 +71,7 @@ useShareTimeline((res) => {
 
   return {
     title: '米时典 SeeDict | 福州话词典',
-    imageUrl: 'https://seedict.com/assets/logo-fFBFh86H.svg'
+    imageUrl: 'https://oss.seedict.com/images/miniapp-cover.webp'
   }
 })
 </script>
