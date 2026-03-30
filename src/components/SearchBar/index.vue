@@ -11,6 +11,7 @@
       />
       <input
         class="text-rosybrown-800 h-full w-full mr-2 ml-1"
+        placeholder="在本处输入汉字或榕拼来查询"
         :value="searchValue"
         @confirm.stop.prevent="onSubmit"
         @focus.stop.prevent="showHistory"
