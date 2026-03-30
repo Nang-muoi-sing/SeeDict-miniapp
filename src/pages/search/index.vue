@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import Taro, { useLoad } from "@tarojs/taro";
+import Taro, {useLoad, useShareAppMessage, useShareTimeline} from "@tarojs/taro";
 import { computed, ref } from 'vue';
 import SearchBar from "@/components/SearchBar/index.vue";
 import Footer from "@/components/Footer/index.vue";
@@ -89,10 +89,34 @@ const hasMore = ref(false);
 
 let q: string = ref<string>('');
 
-
-
 useLoad((option) => {
-  if(option.q) onSearch(option.q);
+  if(option.q) {
+    q.value = option.q
+    onSearch(option.q);
+  }
+})
+useShareAppMessage((res) => {
+
+  // res.from 可区分分享来源：'button' 或 'menu'
+  if (res.from === 'button') {
+    console.log('来自页面内分享按钮', res.target)
+  }
+
+  return {
+    title: `${searchedResponse.value.data.queries} - 福州话检索`,
+    path: `/pages/search/index?w=${q.value}`
+  }
+})
+useShareTimeline((res) => {
+  // res.from 可区分分享来源：'button' 或 'menu'
+  if (res.from === 'button') {
+    console.log('来自页面内分享按钮', res.target)
+  }
+
+  return {
+    title: `${searchedResponse.value.data.queries} - 福州话检索`,
+    query: `w=${q.value}`,
+  }
 })
 
 const searchedResponse = computed(() => ({

@@ -236,7 +236,7 @@
 </template>
 
 <script setup lang="ts">
-import Taro, { useLoad } from "@tarojs/taro";
+import Taro, { useLoad, useShareAppMessage, useShareTimeline  } from "@tarojs/taro";
 import { ref, computed } from 'vue'
 import Footer from '@/components/Footer/index.vue';
 import SearchBar from '@/components/SearchBar/index.vue';
@@ -279,9 +279,36 @@ const audioResponse = ref<AudioResponse>({
     results: [],
   },
 });
+let q: string = ref<string>('');
 
 useLoad((option) => {
-  if(option.w) onSearch(option.w);
+  if(option.w) {
+    onSearch(option.w);
+    q.value = option.w
+  }
+})
+useShareAppMessage((res) => {
+
+  // res.from 可区分分享来源：'button' 或 'menu'
+  if (res.from === 'button') {
+    console.log('来自页面内分享按钮', res.target)
+  }
+
+  return {
+    title: `${wordResponse.value.data.result.seedict.text} - 福州话词汇`,
+    path: `/pages/word/index?w=${q.value}`
+  }
+})
+useShareTimeline((res) => {
+  // res.from 可区分分享来源：'button' 或 'menu'
+  if (res.from === 'button') {
+    console.log('来自页面内分享按钮', res.target)
+  }
+
+  return {
+    title: `${wordResponse.value.data.result.seedict.text} - 福州话词汇`,
+    query: `w=${q.value}`,
+  }
 })
 
 const isCommentedCikLing = computed(() => {
