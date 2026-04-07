@@ -63,10 +63,17 @@
         </view>
       </view>
     </view>
-    <view v-if="showBtn">
-      <Horizontal color="red" @click="openPopup" />
-      111
-      <nut-popup v-model:visible="showPopup" position="right" :style="{ width: '20%', height: '100%' }"></nut-popup>
+    <view v-if="showBtn" class="menu-warp">
+      <view @click="openPopup">
+        <image
+          class="search-icon"
+          src="@/assets/icon/menu.svg"
+          alt=""
+        />
+      </view>
+      <nut-popup v-model:visible="showPopup" position="right" :style="{ width: '300rpx', height: '100%' }" >
+        <side-bar />
+      </nut-popup>
     </view>
   </view>
 </template>
@@ -74,8 +81,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { getItem, setItem, removeItem } from '@/utils/utils'
-import { Horizontal } from '@nutui/icons-vue-taro'
-import { useRouter, eventCenter } from '@tarojs/taro'
+import { useRouter } from '@tarojs/taro'
+import SideBar from '@/components/SideBar/index.vue'
 import './index.styl'
 
 const router = useRouter()
@@ -143,7 +150,6 @@ const selectHistory = (index: number) => {
 
 const openPopup = () => {
   showPopup.value = true
-  eventCenter.trigger('openPopup')
 }
 
 const showBtn = computed(() => {
