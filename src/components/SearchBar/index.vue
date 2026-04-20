@@ -66,12 +66,12 @@
     <view v-if="showBtn" class="menu-warp">
       <view @click="openPopup">
         <image
-          class="search-icon"
+          class="menu-icon"
           src="@/assets/icon/menu.svg"
           alt=""
         />
       </view>
-      <nut-popup v-model:visible="showPopup" position="right" :style="{ width: '300rpx', height: '100%' }" >
+      <nut-popup v-model:visible="showPopup" position="right" :style="{ width: '80vw', height: '100%' }" >
         <side-bar />
       </nut-popup>
     </view>
