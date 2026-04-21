@@ -31,6 +31,7 @@
       >
         <view
           class="inline-flex w-full items-center"
+          @click="openInBrowser('https://seedict.com/tutorial')"
         >
           <image class="mr-1 menu-title-icon" src="/src/assets/icon/graduationCap.svg" />入门</view
         >
@@ -40,8 +41,7 @@
       >
         <view
           class="inline-flex w-full items-center"
-          href="https://jcnf40n3hvft.feishu.cn/docx/FSqidtsgjo25x0x6R1KcChopnTc"
-          target="_blank"
+          @click="openInBrowser('https://jcnf40n3hvft.feishu.cn/docx/FSqidtsgjo25x0x6R1KcChopnTc')"
         >
           <image class="mr-1 menu-title-icon" src="/src/assets/icon/question.svg" />帮助
         </view>
@@ -49,7 +49,7 @@
       <view
         class="rounded-xs m-1 w-full content-center px-3 py-1.5 align-middle font-bold text-rosybrown-600 transition-all ease-in-out hover:bg-wheat-100 hover:text-rosybrown-800"
       >
-        <view class="inline-flex w-full items-center">
+        <view class="inline-flex w-full items-center" @click="openInBrowser('https://seedict.com/tool')">
           <image class="mr-1 menu-title-icon" src="/src/assets/icon/toolsIcon.svg" />工具
         </view>
       </view>
@@ -58,6 +58,7 @@
       >
         <view
           class="inline-flex w-full items-center"
+          @click="openInBrowser('https://seedict.com/about')"
         >
           <image class="mr-1 menu-title-icon" src="/src/assets/icon/aboutIcon.svg" />关于</view
         >
@@ -69,6 +70,7 @@
 <script setup lang="ts">
 import Taro, {} from "@tarojs/taro";
 import './index.styl'
+import {openInBrowser} from "@/utils/utils";
 
 const goto = (url) => {
   Taro.navigateTo({
