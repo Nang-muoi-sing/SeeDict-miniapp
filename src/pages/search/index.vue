@@ -104,7 +104,7 @@ useShareAppMessage((res) => {
 
   return {
     title: `${searchedResponse.value.data.queries} - 福州话检索`,
-    path: `/pages/search/index?w=${q.value}`
+    path: `/pages/search/index?q=${q.value}`
   }
 })
 useShareTimeline((res) => {
