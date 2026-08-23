@@ -1,5 +1,5 @@
 <template>
-  <view class="bg-wheat-50 relative min-h-screen z-10 overflow-hidden pt-1 word-page">
+  <view class="bg-wheat-50 relative min-h-screen z-10 overflow-hidden pt-1 pb-56 word-page">
     <search-bar class="relative w-[90vw] sm:w-sm md:w-md" :on-search="goSearch" />
     <view class="mx-auto w-[90vw] sm:w-md md:w-2xl lg:w-3xl mt-10">
       <WordHead
@@ -12,7 +12,10 @@
         "
       />
       <view class="mb-5 flex justify-end">
-        <view class="word-qrcode-trigger" @tap.stop="openQrcodePopup">
+        <view
+          class="w-[52rpx] h-[52rpx] rounded-[12rpx] border-[2rpx] border-[#b9ac9f] bg-[#f5f2ed] flex items-center justify-center"
+          @tap.stop="openQrcodePopup"
+        >
           <Scan2 color="#7f6e60" size="18" />
         </view>
       </view>
@@ -238,18 +241,18 @@
     </view>
     <view
       v-if="isQrcodePopupVisible"
-      class="qrcode-popup-mask"
+      class="fixed inset-0 z-[1200] bg-[rgba(0,0,0,0.45)] flex items-center justify-center p-[32rpx] box-border"
       @tap="closeQrcodePopup"
     >
-      <view class="qrcode-popup-body" @tap.stop>
+      <view class="w-[520rpx] max-w-full bg-white rounded-[16rpx] p-[24rpx] box-border" @tap.stop>
         <image
-          class="qrcode-popup-image"
+          class="w-full h-[472rpx] rounded-[12rpx] bg-[#f8f7f5]"
           :src="qrcodeImageSrc"
           mode="aspectFit"
           show-menu-by-longpress
           @longpress.stop.prevent="saveQrcodeImage"
         />
-        <view class="qrcode-popup-tip">长按图片保存到本地</view>
+        <view class="mt-[18rpx] text-center text-[26rpx] text-[#8e7c6d]">长按图片保存到本地</view>
       </view>
     </view>
     <Footer />
