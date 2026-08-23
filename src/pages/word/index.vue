@@ -1,7 +1,7 @@
 <template>
   <view class="bg-wheat-50 relative min-h-screen z-10 overflow-hidden pt-1 word-page">
     <search-bar class="relative w-[90vw] sm:w-sm md:w-md" :on-search="goSearch" />
-    <view class="mx-auto w-[90vw] sm:w-md md:w-2xl lg:w-3xl mt-10 mb-10">
+    <view class="mx-auto w-[90vw] sm:w-md md:w-2xl lg:w-3xl mt-10">
       <WordHead
         :text="wordResponse.data.result.seedict.text"
         :yngping="wordResponse.data.result.seedict.pronPrimary"
@@ -11,6 +11,11 @@
             : ''
         "
       />
+      <view class="mb-5 flex justify-end">
+        <view class="word-qrcode-trigger" @tap.stop="openQrcodePopup">
+          <Scan2 color="#7f6e60" size="18" />
+        </view>
+      </view>
       <view
         v-if="
           (wordResponse.data.result.seedict.expls.length > 0 &&
@@ -231,6 +236,22 @@
         </view>
       </view>
     </view>
+    <view
+      v-if="isQrcodePopupVisible"
+      class="qrcode-popup-mask"
+      @tap="closeQrcodePopup"
+    >
+      <view class="qrcode-popup-body" @tap.stop>
+        <image
+          class="qrcode-popup-image"
+          :src="qrcodeImageSrc"
+          mode="aspectFit"
+          show-menu-by-longpress
+          @longpress.stop.prevent="saveQrcodeImage"
+        />
+        <view class="qrcode-popup-tip">长按图片保存到本地</view>
+      </view>
+    </view>
     <Footer />
   </view>
 </template>
@@ -238,6 +259,7 @@
 <script setup lang="ts">
 import Taro, { useLoad, useShareAppMessage, useShareTimeline  } from "@tarojs/taro";
 import { ref, computed } from 'vue'
+import { Scan2 } from '@nutui/icons-vue-taro';
 import Footer from '@/components/Footer/index.vue';
 import SearchBar from '@/components/SearchBar/index.vue';
 import WordHead from '@/components/WordHead/index.vue'
@@ -250,6 +272,7 @@ import type { AudioResponse, WordResponse, WordSeeDict } from '@/utils/typing';
 import { correctText } from '@/utils/typography';
 import { yngpingToIPA } from '@/utils/phonetics';
 import { searchAudio, searchWord } from "@/api/api";
+import qrcodePlaceholder from '@/assets/logo-see.png';
 import './index.styl'
 
 const ossUrl = 'https://oss.seedict.com'
@@ -316,6 +339,140 @@ const isCommentedCikLing = computed(() => {
     (entry) => entry.comment?.trim() !== ''
   );
 });
+
+const isQrcodePopupVisible = ref(false);
+const isSavingQrcode = ref(false);
+
+// TODO: 接入后端二维码接口后，替换为接口返回的图片地址。
+const qrcodeImageSrc = computed(() => qrcodePlaceholder);
+
+const openQrcodePopup = () => {
+  isQrcodePopupVisible.value = true;
+};
+
+const closeQrcodePopup = () => {
+  isQrcodePopupVisible.value = false;
+};
+
+const ensureAlbumPermission = async () => {
+  const { authSetting } = await Taro.getSetting();
+  const permission = authSetting?.['scope.writePhotosAlbum'];
+  if (permission !== false) {
+    return true;
+  }
+
+  const modalRes = await Taro.showModal({
+    title: '需要相册权限',
+    content: '请在设置中允许保存到相册',
+    confirmText: '去设置',
+  });
+  if (!modalRes.confirm) {
+    return false;
+  }
+
+  const openSettingRes = await Taro.openSetting();
+  return !!openSettingRes.authSetting?.['scope.writePhotosAlbum'];
+};
+
+const resolveQrcodeFilePath = async (src: string) => {
+  if (src.startsWith('data:image/')) {
+    const dataUrlMatch = src.match(/^data:image\/(\w+);base64,(.+)$/);
+    if (!dataUrlMatch) {
+      throw new Error('invalid data url');
+    }
+    const ext = dataUrlMatch[1] || 'png';
+    const base64Data = dataUrlMatch[2];
+    const filePath = `${Taro.env.USER_DATA_PATH}/word-qrcode-${Date.now()}.${ext}`;
+    const fileSystemManager = Taro.getFileSystemManager();
+
+    await new Promise<void>((resolve, reject) => {
+      fileSystemManager.writeFile({
+        filePath,
+        data: base64Data,
+        encoding: 'base64',
+        success: () => resolve(),
+        fail: (error) => reject(error),
+      });
+    });
+    return filePath;
+  }
+
+  if (/^https?:\/\//.test(src)) {
+    const downloadRes = await Taro.downloadFile({
+      url: src,
+    });
+    if (downloadRes.statusCode !== 200 || !downloadRes.tempFilePath) {
+      throw new Error(`download failed: ${downloadRes.statusCode}`);
+    }
+    return downloadRes.tempFilePath;
+  }
+
+  const imageInfo = await Taro.getImageInfo({
+    src,
+  });
+  return imageInfo.path;
+};
+
+const saveQrcodeImage = async () => {
+  if (isSavingQrcode.value) {
+    return;
+  }
+  isSavingQrcode.value = true;
+
+  try {
+    const hasPermission = await ensureAlbumPermission();
+    if (!hasPermission) {
+      Taro.showToast({
+        title: '未开启相册权限',
+        icon: 'none',
+      });
+      return;
+    }
+
+    Taro.showLoading({
+      title: '保存中',
+    });
+
+    const filePath = await resolveQrcodeFilePath(qrcodeImageSrc.value);
+
+    await Taro.saveImageToPhotosAlbum({
+      filePath,
+    });
+
+    Taro.showToast({
+      title: '已保存到相册',
+      icon: 'success',
+    });
+  } catch (error) {
+    const errMsg = String((error as { errMsg?: string })?.errMsg || '');
+    if (errMsg.includes('cancel')) {
+      Taro.showToast({
+        title: '已取消保存',
+        icon: 'none',
+      });
+      return;
+    }
+    if (errMsg.includes('auth deny') || errMsg.includes('auth denied')) {
+      const modalRes = await Taro.showModal({
+        title: '需要相册权限',
+        content: '请在设置中允许保存到相册',
+        confirmText: '去设置',
+      });
+      if (modalRes.confirm) {
+        await Taro.openSetting();
+      }
+      return;
+    }
+
+    Taro.showToast({
+      title: '保存失败，请重试',
+      icon: 'none',
+    });
+  } finally {
+    isSavingQrcode.value = false;
+    Taro.hideLoading();
+  }
+};
 
 const onSearch = async (value: string) => {
   try {

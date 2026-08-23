@@ -1,7 +1,7 @@
 <template>
   <view class="word-head">
     <view
-      class="relative z-10 mb-8 mt-5 cursor-pointer overflow-hidden rounded-lg bg-wheat-100 px-8 py-6 transition-all duration-300 ease-in-out before:absolute before:left-[100%] before:top-[100%] before:-z-10 before:h-[100rem] before:w-[100rem] before:rounded-full before:bg-wheat-200 before:transition-all before:duration-700 before:content-[''] active:before:-left-[16rem] active:before:-top-[16rem] active:before:transition-colors active:before:duration-0 md:hover:before:-left-[16rem] md:hover:before:-top-[16rem]"
+      class="relative z-10 mb-2 mt-5 cursor-pointer overflow-hidden rounded-lg bg-wheat-100 px-8 py-6 transition-all duration-300 ease-in-out before:absolute before:left-[100%] before:top-[100%] before:-z-10 before:h-[100rem] before:w-[100rem] before:rounded-full before:bg-wheat-200 before:transition-all before:duration-700 before:content-[''] active:before:-left-[16rem] active:before:-top-[16rem] active:before:transition-colors active:before:duration-0 md:hover:before:-left-[16rem] md:hover:before:-top-[16rem]"
       :class="isAudioClicking ? '' : 'active:scale-95'"
       @click.prevent="handleCopyClick"
     >
