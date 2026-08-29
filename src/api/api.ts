@@ -7,3 +7,8 @@ export const searchWord = (params) => api.get(`/api/v1/word/?${params}`, {})
 export const searchAudio = (params) => api.get(`/api/v1/audio/?${params}`, {})
 
 export const getShuffle = () => api.get(`/api/v1/shuffle/`, {})
+
+export const getShare = (wid) => {
+  debugger
+  return api.get(`/api/v2/words/${wid}/share/`, {})
+}

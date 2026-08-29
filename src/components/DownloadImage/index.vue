@@ -26,20 +26,44 @@
 </template>
 
 <script setup lang="ts">
-import Taro, {  } from "@tarojs/taro";
-import { ref, computed } from 'vue'
+import Taro from "@tarojs/taro";
+import { ref } from 'vue'
 import { Scan2 } from '@nutui/icons-vue-taro';
-import qrcodePlaceholder from '@/assets/logo-see.png';
+import {getShare} from "@/api/api";
 import './index.styl'
+
+const props = defineProps<{
+  w: string | number;
+}>();
 
 const isQrcodePopupVisible = ref(false);
 const isSavingQrcode = ref(false);
+const qrcodeImageSrc = ref('');
+const seedictOrigin = 'https://seedict.com';
 
-// TODO: 接入后端二维码接口后，替换为接口返回的图片地址。
-const qrcodeImageSrc = computed(() => qrcodePlaceholder);
+const normalizeImageUrl = (url: string) => {
+  if (!url) {
+    return '';
+  }
+  if (/^https?:\/\//.test(url)) {
+    return url;
+  }
+  return `${seedictOrigin}${url.startsWith('/') ? '' : '/'}${url}`;
+};
+
+const loadQrcodeImage = async () => {
+  const res = await getShare(props.w);
+  const imageSrc = normalizeImageUrl(res?.data?.miniappQrcodeUrl || '');
+  qrcodeImageSrc.value = imageSrc;
+};
+
+if (!props.w) {
+  qrcodeImageSrc.value = '';
+}
 
 const openQrcodePopup = () => {
   isQrcodePopupVisible.value = true;
+  void loadQrcodeImage();
 };
 
 const closeQrcodePopup = () => {
@@ -107,6 +131,13 @@ const resolveQrcodeFilePath = async (src: string) => {
 
 const saveQrcodeImage = async () => {
   if (isSavingQrcode.value) {
+    return;
+  }
+  if (!qrcodeImageSrc.value) {
+    Taro.showToast({
+      title: '图片加载中，请稍后',
+      icon: 'none',
+    });
     return;
   }
   isSavingQrcode.value = true;

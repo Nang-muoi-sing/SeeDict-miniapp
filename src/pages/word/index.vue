@@ -12,7 +12,7 @@
         "
       />
       <view class="mb-5 flex justify-end">
-        <DownloadImage />
+        <DownloadImage :w="q" />
       </view>
       <view
         v-if="
