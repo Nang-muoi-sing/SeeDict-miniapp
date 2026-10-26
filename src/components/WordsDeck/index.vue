@@ -61,6 +61,7 @@ const startTime = ref(0);
 
 // 初始化弹簧动画
 const initSprings = (): void => {
+  const { windowWidth } = Taro.getWindowInfo();
   springs.length = 0; // 清空旧动画数据
 
   deckStore.cards.forEach((_, index) => {
@@ -70,8 +71,8 @@ const initSprings = (): void => {
     springs.push({
       x: isGone
         ? index % 2 === 0
-          ? -window.innerWidth - 200
-          : window.innerWidth + 200
+          ? -windowWidth - 200
+          : windowWidth + 200
         : index * 4,
       y: isGone ? 0 : index * 4,
       scale: 1,

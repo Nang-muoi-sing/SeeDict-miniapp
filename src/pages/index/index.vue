@@ -17,8 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import Taro, {useShareAppMessage, useShareTimeline} from "@tarojs/taro";
-import { onMounted, ref, onBeforeUnmount} from 'vue'
+import Taro, {usePageScroll, useShareAppMessage, useShareTimeline} from "@tarojs/taro";
+import { ref } from 'vue'
 import Footer from '@/components/Footer/index.vue';
 import SearchBar from '@/components/SearchBar/index.vue';
 import WordsDeck from '@/components/WordsDeck/index.vue'
@@ -27,23 +27,11 @@ import './index.styl'
 
 
 const scrollY = ref(0);
-const searchBarFixed = ref(false);
-const navPanelFixed = ref(false);
 
-const handleScroll = () => {
-  scrollY.value = window.scrollY;
-  searchBarFixed.value = scrollY.value > 200;
-  navPanelFixed.value = scrollY.value > 300;
-};
-
-onMounted(() => {
-  document.title = "米时典 SeeDict | 福州话词典"
-  window.addEventListener('scroll', handleScroll);
+usePageScroll(({ scrollTop }) => {
+  scrollY.value = scrollTop;
 });
 
-onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
 const goSearch = (value) => {
   Taro.navigateTo({
     url: `/pages/search/index?q=${value}`,
